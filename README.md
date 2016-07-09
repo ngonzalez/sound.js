@@ -11,10 +11,11 @@
     })
 ```
 
-Uses AudioContext JS to provide an Audio Player
-Compatible with Apple Safari
+Uses [Web Audio API](http://www.w3.org/TR/webaudio/) AudioContext
+to provide a JavaScript Audio Player,
+compatible with Apple Safari / Google Chrome.
 
-Requires [jQuery Ajax Native](https://github.com/acigna/jquery-ajax-native)
+Requires 
 
 ```javascript
   player._playback_time()
@@ -26,4 +27,5 @@ Requires [jQuery Ajax Native](https://github.com/acigna/jquery-ajax-native)
   player.pause()
   player.paused
   // -> true
+  player.stop()
 ```
