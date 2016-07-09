@@ -16,8 +16,6 @@ Uses [Web Audio API](http://www.w3.org/TR/webaudio/) AudioContext
 to provide a JavaScript Audio Player,
 compatible with Apple Safari / Google Chrome.
 
-Requires 
-
 ```javascript
   player._playback_time()
   // -> 83.314
