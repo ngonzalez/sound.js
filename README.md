@@ -5,6 +5,7 @@
       volume: 0.5,
       url: "http://example.com/media/MGM5ZDB" },
     function(player) { // Init Callback
+        trigger_ios_callbacks()
         player.play()
     }, function() { // End Callback
         console.log('Playback Ended')
