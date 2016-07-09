@@ -12,10 +12,9 @@
 ```
 
 Uses AudioContext JS to provide an Audio Player
-
 Compatible with Apple Safari
 
-Helpers:
+Requires [jQuery Ajax Native](https://github.com/acigna/jquery-ajax-native)
 
 ```javascript
   player._playback_time()
