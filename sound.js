@@ -53,7 +53,8 @@
     };
 
     Stream.prototype._volume = function(value) {
-      return this.gain.gain.value = value;
+      this.node.gain.value = value;
+      return true;
     };
 
     Stream.prototype._playback_time = function() {
@@ -64,11 +65,11 @@
     };
 
     Stream.prototype._play = function() {
-      this.gain = window.audio.createGain();
-      this.gain.connect(window.audio.destination);
+      this.node = window.audio.createGain();
+      this.node.connect(window.audio.destination);
       this.source = window.audio.createBufferSource();
       this.source.buffer = this.buffer;
-      this.source.connect(this.gain);
+      this.source.connect(this.node);
       this.source.onended = (function(_this) {
         return function(event) {
           return _this._ended();
@@ -77,7 +78,8 @@
       this._volume(this.options.volume || 1);
       this.paused = false;
       this.started_at = Date.now();
-      return this.source.start(0, this.time, this.buffer.duration);
+      this.source.start(0, this.time, this.buffer.duration);
+      return true;
     };
 
     Stream.prototype._stop = function() {
@@ -100,12 +102,12 @@
         return;
       }
       if (this.playing) {
-        this.playing = false;
+        delete this.playing;
       }
       if (this.complete) {
         this.complete();
       }
-      this.gain && this.gain.disconnect();
+      this.node && this.node.disconnect();
       this.source && this.source.disconnect();
       return true;
     };

@@ -1,5 +1,5 @@
 ((AudioContext) ->
-    window.audio = window.set_ios_callbacks(new AudioContext())
+    window.audio = window.set_ios_callbacks new AudioContext()
     window.new_player = (options, init, complete) ->
         xhr = new XMLHttpRequest()
         xhr.open 'GET', options.url, true
@@ -33,23 +33,25 @@ class Stream
         @_volume value
 
     _volume: (value) ->
-        @gain.gain.value = value;
+        @node.gain.value = value;
+        return true
 
     _playback_time: ->
         return @time if !@started_at
         return (Date.now() - @started_at) / 1000
 
     _play: ->
-        @gain = window.audio.createGain()
-        @gain.connect window.audio.destination
+        @node = window.audio.createGain()
+        @node.connect window.audio.destination
         @source = window.audio.createBufferSource()
         @source.buffer = @buffer
-        @source.connect @gain
+        @source.connect @node
         @source.onended = (event) => @_ended()
         @_volume @options.volume || 1
         @paused = false
         @started_at = Date.now()
         @source.start 0, @time, @buffer.duration
+        return true
 
     _stop: ->
         if @playing
@@ -63,8 +65,8 @@ class Stream
 
     _ended: ->
         return if @paused
-        @playing = false if @playing
+        delete @playing if @playing
         @complete() if @complete
-        @gain && @gain.disconnect()
+        @node && @node.disconnect()
         @source && @source.disconnect()
         return true
